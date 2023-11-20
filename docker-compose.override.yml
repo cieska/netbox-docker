@@ -12,35 +12,35 @@ services:
     environment:
       NETBOX_DELETE_LEGACY_DATA: "true"
     env_file: stack.env
-    security_opt:
-      - seccomp:unconfined
-    healthcheck:
-      # Time for which the health check can fail after the container is started.
-      # This depends mostly on the performance of your database. On the first start,
-      # when all tables need to be created the start_period should be higher than on
-      # subsequent starts. For the first start after major version upgrades of NetBox
-      # the start_period might also need to be set higher.
-      # Default value in our docker-compose.yml is 60s
-      start_period: 120s
-    #environment:
-      # SKIP_SUPERUSER: "false"
-      # SUPERUSER_API_TOKEN: ""
-      # SUPERUSER_EMAIL: ""
-      # SUPERUSER_NAME: ""
-      # SUPERUSER_PASSWORD: "" 
-    restart: unless-stopped
- #   volumes:
- #   - .config:/etc/netbox/config:z,ro
- #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
- #   - netbox-media-files:/opt/netbox/netbox/media:rw
- #   - netbox-reports-files:/opt/netbox/netbox/reports:rw
- #   - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
- #   
-  netbox-worker:
-    healthcheck:
-      start_period: 120s
-    security_opt:
-      - seccomp:unconfined
+#    security_opt:
+#      - seccomp:unconfined
+#    healthcheck:
+#      # Time for which the health check can fail after the container is started.
+#      # This depends mostly on the performance of your database. On the first start,
+#      # when all tables need to be created the start_period should be higher than on
+#      # subsequent starts. For the first start after major version upgrades of NetBox
+#      # the start_period might also need to be set higher.
+#      # Default value in our docker-compose.yml is 60s
+#      start_period: 120s
+#    #environment:
+#      # SKIP_SUPERUSER: "false"
+#      # SUPERUSER_API_TOKEN: ""
+#      # SUPERUSER_EMAIL: ""
+#      # SUPERUSER_NAME: ""
+#      # SUPERUSER_PASSWORD: "" 
+#    restart: unless-stopped
+# #   volumes:
+# #   - .config:/etc/netbox/config:z,ro
+# #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+# #   - netbox-media-files:/opt/netbox/netbox/media:rw
+# #   - netbox-reports-files:/opt/netbox/netbox/reports:rw
+# #   - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+# #   
+#  netbox-worker:
+#    healthcheck:
+#      start_period: 120s
+#    security_opt:
+#      - seccomp:unconfined
  #   volumes:
  #   - .config:/etc/netbox/config:z,ro
  #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
@@ -48,11 +48,11 @@ services:
  #   - netbox-reports-files:/opt/netbox/netbox/reports:rw
  #   - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
   
-  netbox-housekeeping:
-    healthcheck:
-      start_period: 120s
-    security_opt:
-      - seccomp:unconfined
+#  netbox-housekeeping:
+#    healthcheck:
+#      start_period: 120s
+#    security_opt:
+#      - seccomp:unconfined
  #   volumes:
  #   - .config:/etc/netbox/config:z,ro
  #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
@@ -72,22 +72,23 @@ services:
   redis-cache:
     env_file: stack.env
 
-volumes:
-  netbox-media-files:
-    name: netbox-media-files
-    driver: local
-  netbox-postgres-data:
-    name: netbox-postgres-data
-    driver: local
-  netbox-redis-cache-data:
-    name: netbox-redis-cache-data
-    driver: local
-  netbox-redis-data:
-    name: netbox-redis-data
-    driver: local
-  netbox-reports-files:
-    name: netbox-reports-files
-    driver: local
-  netbox-scripts-files:
-    name: netbox-scripts-files
-    driver: local
+#volumes:
+#  netbox-media-files:
+#    name: netbox-media-files
+#    driver: local
+#  netbox-postgres-data:
+#    name: netbox-postgres-data
+#    driver: local
+#  netbox-redis-cache-data:
+#    name: netbox-redis-cache-data
+#    driver: local
+#  netbox-redis-data:
+#    name: netbox-redis-data
+#    driver: local
+#  netbox-reports-files:
+#    name: netbox-reports-files
+#    driver: local
+#  netbox-scripts-files:
+#    name: netbox-scripts-files
+#    driver: local
+#
