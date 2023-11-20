@@ -29,36 +29,36 @@ services:
       # SUPERUSER_NAME: ""
       # SUPERUSER_PASSWORD: "" 
     restart: unless-stopped
-    volumes:
-    - .config:/etc/netbox/config:z,ro
-    #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
-    - netbox-media-files:/opt/netbox/netbox/media:rw
-    - netbox-reports-files:/opt/netbox/netbox/reports:rw
-    - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
-    
+ #   volumes:
+ #   - .config:/etc/netbox/config:z,ro
+ #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+ #   - netbox-media-files:/opt/netbox/netbox/media:rw
+ #   - netbox-reports-files:/opt/netbox/netbox/reports:rw
+ #   - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+ #   
   netbox-worker:
     healthcheck:
       start_period: 120s
     security_opt:
       - seccomp:unconfined
-    volumes:
-    - .config:/etc/netbox/config:z,ro
-    #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
-    - netbox-media-files:/opt/netbox/netbox/media:rw
-    - netbox-reports-files:/opt/netbox/netbox/reports:rw
-    - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+ #   volumes:
+ #   - .config:/etc/netbox/config:z,ro
+ #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+ #   - netbox-media-files:/opt/netbox/netbox/media:rw
+ #   - netbox-reports-files:/opt/netbox/netbox/reports:rw
+ #   - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
   
   netbox-housekeeping:
     healthcheck:
       start_period: 120s
     security_opt:
       - seccomp:unconfined
-    volumes:
-    - .config:/etc/netbox/config:z,ro
-    #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
-    - netbox-media-files:/opt/netbox/netbox/media:rw
-    - netbox-reports-files:/opt/netbox/netbox/reports:rw
-    - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+ #   volumes:
+ #   - .config:/etc/netbox/config:z,ro
+ #   #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+ #   - netbox-media-files:/opt/netbox/netbox/media:rw
+ #   - netbox-reports-files:/opt/netbox/netbox/reports:rw
+ #   - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
 
   # postgres
   postgres:
