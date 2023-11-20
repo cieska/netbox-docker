@@ -10,7 +10,7 @@ services:
     # outside of the container add the following port mapping:
     # - "8001:8081"
     environment:
-      - NETBOX_DELETE_LEGACY_DATA: "true"
+      NETBOX_DELETE_LEGACY_DATA: "true"
     env_file: stack.env
     security_opt:
       - seccomp:unconfined
