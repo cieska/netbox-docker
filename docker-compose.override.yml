@@ -25,7 +25,8 @@ services:
       # SUPERUSER_API_TOKEN: ""
       # SUPERUSER_EMAIL: ""
       # SUPERUSER_NAME: ""
-      # SUPERUSER_PASSWORD: ""
+      # SUPERUSER_PASSWORD: "" 
+    restart: unless-stopped
     volumes:
     - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:rw
