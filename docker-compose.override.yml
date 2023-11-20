@@ -31,6 +31,7 @@ services:
     - netbox-media-files:/opt/netbox/netbox/media:rw
     - netbox-reports-files:/opt/netbox/netbox/reports:rw
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+    
   netbox-worker:
     security_opt:
       - seccomp:unconfined
@@ -39,6 +40,7 @@ services:
     - netbox-media-files:/opt/netbox/netbox/media:rw
     - netbox-reports-files:/opt/netbox/netbox/reports:rw
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+  
   netbox-housekeeping:
     volumes:
     - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
