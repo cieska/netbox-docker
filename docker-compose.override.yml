@@ -30,7 +30,8 @@ services:
       # SUPERUSER_PASSWORD: "" 
     restart: unless-stopped
     volumes:
-    - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+    - .config:/etc/netbox/config:z,ro
+    #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:rw
     - netbox-reports-files:/opt/netbox/netbox/reports:rw
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
@@ -41,7 +42,8 @@ services:
     security_opt:
       - seccomp:unconfined
     volumes:
-    - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+    - .config:/etc/netbox/config:z,ro
+    #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:rw
     - netbox-reports-files:/opt/netbox/netbox/reports:rw
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
@@ -52,7 +54,8 @@ services:
     security_opt:
       - seccomp:unconfined
     volumes:
-    - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
+    - .config:/etc/netbox/config:z,ro
+    #- /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:rw
     - netbox-reports-files:/opt/netbox/netbox/reports:rw
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
