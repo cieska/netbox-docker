@@ -34,6 +34,8 @@ services:
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
     
   netbox-worker:
+    healthcheck:
+      start_period: 120s
     security_opt:
       - seccomp:unconfined
     volumes:
@@ -43,6 +45,10 @@ services:
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
   
   netbox-housekeeping:
+    healthcheck:
+      start_period: 120s
+    security_opt:
+      - seccomp:unconfined
     volumes:
     - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:rw
