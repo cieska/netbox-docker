@@ -11,7 +11,7 @@ services:
     # - "8001:8081"
     env_file: stack.env
     security_opt:
-      - seccomp: unconfined
+      - seccomp:unconfined
     healthcheck:
       # Time for which the health check can fail after the container is started.
       # This depends mostly on the performance of your database. On the first start,
@@ -33,7 +33,7 @@ services:
     - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
   netbox-worker:
     security_opt:
-      - seccomp: unconfined
+      - seccomp:unconfined
     volumes:
     - /mnt/lvol-docker/AppData/netbox/etc/config:/etc/netbox/config:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:rw
