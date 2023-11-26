@@ -5,7 +5,7 @@ version: '3.4'
 services:
   ## Netbox ##############################
   netbox:
-    image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
+    image: docker.io/netboxcommunity/netbox:v3.6-2.7.0
     depends_on:
     - postgres
     - redis
@@ -31,7 +31,7 @@ services:
 
   ## Netbox-worker ##############################
   netbox-worker:
-    image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
+    image: docker.io/netboxcommunity/netbox:v3.6-2.7.0
     name: netbox-worker
     depends_on:
       netbox:
@@ -55,7 +55,7 @@ services:
     
   ## Netbox Housekeeping ##############################
   netbox-housekeeping:
-    image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
+    image: docker.io/netboxcommunity/netbox:v3.6-2.7.0
     name: netbox-housekeeping
     depends_on:
       netbox:
