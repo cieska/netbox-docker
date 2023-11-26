@@ -1,12 +1,16 @@
+---
+# 2023.11.26 - first build
+# Arentas
 version: '3.4'
 services:
-  netbox: &netbox
+  ## Netbox ##############################
+  netbox:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
     depends_on:
     - postgres
     - redis
     - redis-cache
-    env_file: env/netbox.env
+    env_file: stack.env
     user: 'unit:root'
     healthcheck:
       start_period: 60s
@@ -14,15 +18,23 @@ services:
       interval: 15s
       test: "curl -f http://localhost:8080/api/ || exit 1"
     volumes:
-    - ./configuration:/etc/netbox/config:z,ro
-    - netbox-media-files:/opt/netbox/netbox/media:rw
-    - netbox-reports-files:/opt/netbox/netbox/reports:rw
-    - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+    - /mnt/lvol-docker/AppData/netbox/etc/netbox/config:/etc/netbox/config:z,ro
+    - /mnt/lvol-docker/AppData/netbox/media-files:/opt/netbox/netbox/media:rw
+    - /mnt/lvol-docker/AppData/netbox/reports-files:/opt/netbox/netbox/reports:rw
+    - /mnt/lvol-docker/AppData/netbox/scripts-files:/opt/netbox/netbox/scripts:rw
+    #- ./configuration:/etc/netbox/config:z,ro
+    #- netbox-media-files:/opt/netbox/netbox/media:rw
+    #- netbox-reports-files:/opt/netbox/netbox/reports:rw
+    #- netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+
+  ## Netbox-worker ##############################
   netbox-worker:
-    <<: *netbox
+    image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
     depends_on:
       netbox:
         condition: service_healthy
+    env_file: stack.env
+    user: 'unit:root'
     command:
     - /opt/netbox/venv/bin/python
     - /opt/netbox/netbox/manage.py
@@ -32,11 +44,20 @@ services:
       timeout: 3s
       interval: 15s
       test: "ps -aux | grep -v grep | grep -q rqworker || exit 1"
+    volumes:
+    - /mnt/lvol-docker/AppData/netbox/etc/netbox/config:/etc/netbox/config:z,ro
+    - /mnt/lvol-docker/AppData/netbox/media-files:/opt/netbox/netbox/media:rw
+    - /mnt/lvol-docker/AppData/netbox/reports-files:/opt/netbox/netbox/reports:rw
+    - /mnt/lvol-docker/AppData/netbox/scripts-files:/opt/netbox/netbox/scripts:rw    
+    
+  ## Netbox Housekeeping ##############################
   netbox-housekeeping:
-    <<: *netbox
+    image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
     depends_on:
       netbox:
         condition: service_healthy
+    env_file: stack.env
+    user: 'unit:root'
     command:
     - /opt/netbox/housekeeping.sh
     healthcheck:
@@ -44,44 +65,52 @@ services:
       timeout: 3s
       interval: 15s
       test: "ps -aux | grep -v grep | grep -q housekeeping || exit 1"
-
-  # postgres
+    volumes:
+    - /mnt/lvol-docker/AppData/netbox/etc/netbox/config:/etc/netbox/config:z,ro
+    - /mnt/lvol-docker/AppData/netbox/media-files:/opt/netbox/netbox/media:rw
+    - /mnt/lvol-docker/AppData/netbox/reports-files:/opt/netbox/netbox/reports:rw
+    - /mnt/lvol-docker/AppData/netbox/scripts-files:/opt/netbox/netbox/scripts:rw   
+    
+  ## Postgres ##############################
   postgres:
     image: docker.io/postgres:15-alpine
-    env_file: env/postgres.env
+    env_file: stack.env
     volumes:
-    - netbox-postgres-data:/var/lib/postgresql/data
+    - /mnt/lvol-docker/AppData/netbox/postgres-data:/var/lib/postgresql/data:rw
 
-  # redis
+  ## Redis ##############################
   redis:
     image: docker.io/redis:7-alpine
     command:
     - sh
     - -c # this is to evaluate the $REDIS_PASSWORD from the env
     - redis-server --appendonly yes --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
-    env_file: env/redis.env
+    env_file: stack.env
     volumes:
-    - netbox-redis-data:/data
+    - /mnt/lvol-docker/AppData/netbox/redis-data:/data:rw
+
+  ## Redis cache ##############################
   redis-cache:
     image: docker.io/redis:7-alpine
     command:
     - sh
     - -c # this is to evaluate the $REDIS_PASSWORD from the env
     - redis-server --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
-    env_file: env/redis-cache.env
+    env_file: stack.env
     volumes:
-    - netbox-redis-cache-data:/data
+    - /mnt/lvol-docker/AppData/netbox/redis-cache-data:/data:rw
 
-volumes:
-  netbox-media-files:
-    driver: local
-  netbox-postgres-data:
-    driver: local
-  netbox-redis-cache-data:
-    driver: local
-  netbox-redis-data:
-    driver: local
-  netbox-reports-files:
-    driver: local
-  netbox-scripts-files:
-    driver: local
+# Volumes per original compose file, left for reference only.    
+#volumes:
+#  netbox-media-files:
+#    driver: local
+#  netbox-postgres-data:
+#    driver: local
+#  netbox-redis-cache-data:
+#    driver: local
+#  netbox-redis-data:
+#    driver: local
+#  netbox-reports-files:
+#    driver: local
+#  netbox-scripts-files:
+#    driver: local
