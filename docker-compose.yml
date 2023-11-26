@@ -6,7 +6,6 @@ services:
   ## Netbox ##############################
   netbox:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
-    name: netbox
     depends_on:
     - postgres
     - redis
