@@ -32,7 +32,6 @@ services:
   ## Netbox-worker ##############################
   netbox-worker:
     image: docker.io/netboxcommunity/netbox:v3.6-2.7.0
-    name: netbox-worker
     depends_on:
       netbox:
         condition: service_healthy
@@ -56,7 +55,6 @@ services:
   ## Netbox Housekeeping ##############################
   netbox-housekeeping:
     image: docker.io/netboxcommunity/netbox:v3.6-2.7.0
-    name: netbox-housekeeping
     depends_on:
       netbox:
         condition: service_healthy
