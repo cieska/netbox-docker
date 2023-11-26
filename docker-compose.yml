@@ -6,6 +6,7 @@ services:
   ## Netbox ##############################
   netbox:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
+    name: netbox
     depends_on:
     - postgres
     - redis
@@ -15,7 +16,7 @@ services:
     ports:
       - "8008:8080"
     healthcheck:
-      start_period: 60s
+      start_period: 120s
       timeout: 3s
       interval: 15s
       test: "curl -f http://localhost:8080/api/ || exit 1"
@@ -32,6 +33,7 @@ services:
   ## Netbox-worker ##############################
   netbox-worker:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
+    name: netbox-worker
     depends_on:
       netbox:
         condition: service_healthy
@@ -55,6 +57,7 @@ services:
   ## Netbox Housekeeping ##############################
   netbox-housekeeping:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.6-2.7.0}
+    name: netbox-housekeeping
     depends_on:
       netbox:
         condition: service_healthy
@@ -76,6 +79,7 @@ services:
   ## Postgres ##############################
   postgres:
     image: docker.io/postgres:15-alpine
+    name: postgres
     env_file: stack.env
     volumes:
     - /mnt/lvol-docker/AppData/netbox/postgres-data:/var/lib/postgresql/data:rw
@@ -83,6 +87,7 @@ services:
   ## Redis ##############################
   redis:
     image: docker.io/redis:7-alpine
+    name: redis
     command:
     - sh
     - -c # this is to evaluate the $REDIS_PASSWORD from the env
@@ -94,6 +99,7 @@ services:
   ## Redis cache ##############################
   redis-cache:
     image: docker.io/redis:7-alpine
+    name: redis-cache
     command:
     - sh
     - -c # this is to evaluate the $REDIS_PASSWORD from the env
