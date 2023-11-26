@@ -76,7 +76,6 @@ services:
   ## Postgres ##############################
   postgres:
     image: docker.io/postgres:15-alpine
-    name: postgres
     env_file: stack.env
     volumes:
     - /mnt/lvol-docker/AppData/netbox/postgres-data:/var/lib/postgresql/data:rw
@@ -84,7 +83,6 @@ services:
   ## Redis ##############################
   redis:
     image: docker.io/redis:7-alpine
-    name: redis
     command:
     - sh
     - -c # this is to evaluate the $REDIS_PASSWORD from the env
@@ -96,7 +94,6 @@ services:
   ## Redis cache ##############################
   redis-cache:
     image: docker.io/redis:7-alpine
-    name: redis-cache
     command:
     - sh
     - -c # this is to evaluate the $REDIS_PASSWORD from the env
